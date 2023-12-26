@@ -6,6 +6,19 @@ mlflow_uri: 'http://128.0.1.1:8080'
 data:
   train_path: data/train.csv
   test_path: data/test.csv
+  cat_features:
+    - Sex
+    - Embarked
+  columns_to_drop:
+    - Ticket
+    - Cabin
+    - Name
+    - PassengerId
+  target: Survived
 
 model_params:
   learning_rate: 1e-2
+  iterations: 500
+  depth: 5
+  silent: True
+  loss_function: Logloss

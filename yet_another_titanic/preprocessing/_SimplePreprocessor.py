@@ -1,25 +1,11 @@
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder
-
-
 class SimplePreprocessor:
-    def __init__(self):
-        self.column_transformer = ColumnTransformer(
-            [
-                ('ohe_encoder', OneHotEncoder(drop='first'), ['Pclass', 'Sex', 'Embarked'])
-            ],
-            sparse_threshold=0,
-            remainder='passthrough'
-        )
 
     def fit(self, data):
-        data = self._process_siblings(data)
-        self.column_transformer.fit(data)
         return self
 
     def transform(self, data):
         data = self._process_siblings(data)
-        return self.column_transformer.transform(data)
+        return data
 
     def fit_transform(self, data):
         self.fit(data)
