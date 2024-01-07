@@ -16,8 +16,8 @@ from yet_another_titanic.utils import create_parents, seed_everything
 def main(config: DictConfig):
     seed_everything(config["random_seed"])
 
-    with dvc.api.open(config["data"]["train_path"]) as f:
-        data = pd.read_csv(f)
+    with dvc.api.open(config["data"]["train_path"]) as file:
+        data = pd.read_csv(file)
 
     target = config["data"]["target"]
 

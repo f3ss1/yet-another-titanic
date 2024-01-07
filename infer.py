@@ -14,8 +14,8 @@ from yet_another_titanic.utils import seed_everything
 def main(config: DictConfig):
     seed_everything(config["random_seed"])
 
-    with dvc.api.open(config["data"]["test_path"]) as f:
-        data = pd.read_csv(f)
+    with dvc.api.open(config["data"]["test_path"]) as file:
+        data = pd.read_csv(file)
 
     transform_pipeline = Pipeline(
         config["data"]["columns_to_drop"], config["data"]["columns_to_mix"], config["data"]["mixed_column_name"]
