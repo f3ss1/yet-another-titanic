@@ -1,4 +1,8 @@
 class SimplePreprocessor:
+    def __init__(self, columns_to_mix, mixed_column_name):
+        self.columns_to_mix = columns_to_mix
+        self.mixed_column_name = mixed_column_name
+
     def fit(self, data):
         return self
 
@@ -10,7 +14,6 @@ class SimplePreprocessor:
         self.fit(data)
         return self.transform(data)
 
-    @staticmethod
-    def _process_siblings(data):
-        data["Siblings"] = data["SibSp"] + data["Parch"]
-        return data.drop(["SibSp", "Parch"], axis=1)
+    def _process_siblings(self, data):
+        data[self.mixed_column_name] = data[self.columns_to_mix].sum(axis=1)
+        return data.drop(self.columns_to_mix, axis=1)

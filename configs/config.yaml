@@ -14,6 +14,10 @@ data:
     - Cabin
     - Name
     - PassengerId
+  columns_to_mix:
+    - SibSp
+    - Parch
+  mixed_column_name: Siblings
   target: Survived
 
 model_params:

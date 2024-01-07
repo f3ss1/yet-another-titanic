@@ -21,8 +21,10 @@ def main(config: DictConfig):
 
     target = config["data"]["target"]
 
-    transform_pipeline = Pipeline(config["data"]["columns_to_drop"])
-    train_data = transform_pipeline.fit_transform(data)
+    transform_pipeline = Pipeline(
+        config["data"]["columns_to_drop"], config["data"]["columns_to_mix"], config["data"]["mixed_column_name"]
+    )
+    train_data = transform_pipeline.transform(data)
 
     train_labels = train_data[[target]]
     train_data = train_data.drop(target, axis=1)
