@@ -11,11 +11,7 @@ class Pipeline:
         self.processor.fit(data)
         return self
 
-    def transform(
-            self,
-            data,
-            clean: bool = True
-    ):
+    def transform(self, data, clean: bool = True):
         if clean:
             data = self.cleaner.transform(data)
         transformed = self.processor.transform(data)

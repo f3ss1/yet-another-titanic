@@ -1,5 +1,5 @@
-from pathlib import Path
 import random
+from pathlib import Path
 
 import numpy as np
 
@@ -9,8 +9,6 @@ def create_parents(path: Path):
     folder.mkdir(parents=True, exist_ok=True)
 
 
-def seed_everything(
-        seed: int
-):
+def seed_everything(seed: int):
     random.seed(seed)
     np.random.seed(seed)

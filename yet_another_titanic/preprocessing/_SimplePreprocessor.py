@@ -1,5 +1,4 @@
 class SimplePreprocessor:
-
     def fit(self, data):
         return self
 
@@ -13,5 +12,5 @@ class SimplePreprocessor:
 
     @staticmethod
     def _process_siblings(data):
-        data['Siblings'] = data['SibSp'] + data['Parch']
-        return data.drop(['SibSp', 'Parch'], axis=1)
+        data["Siblings"] = data["SibSp"] + data["Parch"]
+        return data.drop(["SibSp", "Parch"], axis=1)
