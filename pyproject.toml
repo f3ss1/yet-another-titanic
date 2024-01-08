@@ -26,6 +26,7 @@ line-length = 120
 target-version = ['py310']
 
 [tool.isort]
+skip = ["__init__.py"]
 profile = "black"
 line_length = 120
 multi_line_output = 3
