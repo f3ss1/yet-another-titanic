@@ -9,7 +9,7 @@ from omegaconf import DictConfig
 
 from yet_another_titanic.callbacks import MLflowLoggingCallback
 from yet_another_titanic.preprocessing import Pipeline
-from yet_another_titanic.utils import create_parents, seed_everything
+from yet_another_titanic.utils import create_parents, get_git_commit_hash, seed_everything
 
 
 @hydra.main(version_base=None, config_path="configs", config_name="config")
@@ -30,6 +30,9 @@ def main(config: DictConfig):
     train_data = train_data.drop(target, axis=1)
 
     mlflow.start_run()
+    git_hash = get_git_commit_hash()
+    if git_hash is not None:
+        mlflow.log_param("git_commit", git_hash)
 
     hyperparams = config["model_params"]
     mlflow.log_params(hyperparams)
