@@ -1,4 +1,5 @@
-from yet_another_titanic.preprocessing import DataCleaner, SimplePreprocessor
+from yet_another_titanic.preprocessing._DataCleaner import DataCleaner
+from yet_another_titanic.preprocessing._SimplePreprocessor import SimplePreprocessor
 
 
 class Pipeline:
