@@ -41,4 +41,4 @@ need to do that manually. The data is stored on the Google Drive as backend.
 
 ### MLflow logging
 
-The project useds [MLflow](https://mlflow.org/) to log the training process.
+The project uses [MLflow](https://mlflow.org/) to log the training process.
