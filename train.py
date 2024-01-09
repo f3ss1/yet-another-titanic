@@ -14,6 +14,9 @@ from yet_another_titanic.utils import create_parents, get_git_commit_hash, seed_
 
 @hydra.main(version_base=None, config_path="configs", config_name="config")
 def main(config: DictConfig):
+    if config["use_mlflow"]:
+        mlflow.set_tracking_uri(config["mlflow_uri"])
+
     seed_everything(config["random_seed"])
 
     with dvc.api.open(config["data"]["train_path"]) as file:
@@ -28,25 +31,31 @@ def main(config: DictConfig):
 
     train_labels = train_data[[target]]
     train_data = train_data.drop(target, axis=1)
-
-    mlflow.start_run()
-    git_hash = get_git_commit_hash()
-    if git_hash is not None:
-        mlflow.log_param("git_commit", git_hash)
-
     hyperparams = config["model_params"]
-    mlflow.log_params(hyperparams)
+
+    if config["use_mlflow"]:
+        mlflow.start_run()
+        git_hash = get_git_commit_hash()
+        if git_hash is not None:
+            mlflow.log_param("git_commit", git_hash)
+
+        mlflow.log_params(hyperparams)
 
     model = CatBoostClassifier(custom_metric="F1", **hyperparams)
     train_pool = Pool(train_data, train_labels, cat_features=config["data"]["cat_features"])
 
-    model.fit(train_pool, callbacks=[MLflowLoggingCallback()])
+    if config["use_mlflow"]:
+        model.fit(train_pool, callbacks=[MLflowLoggingCallback()])
+    else:
+        model.fit(train_pool)
 
     model_path = Path("models/model")
     create_parents(model_path)
 
     model.save_model(model_path)
-    mlflow.end_run()
+
+    if config["use_mlflow"]:
+        mlflow.end_run()
 
 
 if __name__ == "__main__":
